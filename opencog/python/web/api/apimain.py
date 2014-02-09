@@ -5,6 +5,7 @@ from flask.ext.restful import Api
 from apiatom import *
 from apiatomcollection import *
 from apitypes import *
+from apischeme import *
 
 
 class RESTAPI(object):
@@ -37,9 +38,11 @@ class RESTAPI(object):
         atom_api = AtomAPI.new(self.atomspace)
         atom_collection_api = AtomCollectionAPI.new(self.atomspace)
         atom_types_api = TypesAPI()
+        scheme_api = SchemeAPI()
         self.api.add_resource(atom_collection_api, '/api/v1.0/atoms', endpoint='atoms')
         self.api.add_resource(atom_api, '/api/v1.0/atoms/<int:id>', endpoint='atom')
         self.api.add_resource(atom_types_api, '/api/v1.0/types', endpoint='types')
+        self.api.add_resource(scheme_api, '/api/v1.0/scheme', endpoint='scheme')
 
     def run(self, host='127.0.0.1', port=5000):
         """

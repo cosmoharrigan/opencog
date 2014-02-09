@@ -4,6 +4,9 @@ http://www.python-requests.org/
 
 From the wiki documentation located here:
 http://wiki.opencog.org/w/REST_API
+
+Prerequisisites:
+  sudo easy_install requests
 """
 
 __author__ = 'Cosmo Harrigan'
