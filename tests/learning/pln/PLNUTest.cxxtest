@@ -1,0 +1,118 @@
+/*
+ * tests/learning/pln/PLNUTest.cxxtest
+ *
+ * Copyright (C) 2014 Cosmo Harrigan
+ * All Rights Reserved
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License v3 as
+ * published by the Free Software Foundation and including the exceptions
+ * at http://opencog.org/wiki/Licenses
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program; if not, write to:
+ * Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
+#include <opencog/server/CogServer.h>
+#include <opencog/util/Config.h>
+
+#include <opencog/server/RequestResult.h>
+#include <opencog/cython/PyMindAgent.h>
+
+using std::string;
+
+using namespace opencog;
+
+class PLNUTest :  public CxxTest::TestSuite
+{
+
+public:
+    void testPLN() {
+        // THIS RUNS, BUT EXCEPTIONS ARE NOT PROPAGATED SUCCESSFULLY:
+        // Load the Python PLNTestModule class that invokes the unit tests
+        Request* loadpyRequest = cogserver.createRequest("pln_test_module.PLNTestModule");
+        TS_ASSERT(loadpyRequest != NULL);
+        cogserver.pushRequest(loadpyRequest);
+        TS_ASSERT_THROWS_NOTHING(cogserver.runLoopStep());
+
+//        CogServer& cogserver = static_cast<CogServer&>(server(CogServer::createInstance));
+
+//        Request* pyRequest = cogserver.createRequest("loadpy");
+//        TS_ASSERT(pyRequest != NULL);
+//        pyRequest->addParameter("pln_examples");
+//        cogserver.pushRequest(pyRequest);
+//        TS_ASSERT_THROWS_NOTHING(cogserver.runLoopStep());
+//
+//        Request* pyRequest2 = cogserver.createRequest("py-eval");
+//        TS_ASSERT(pyRequest2 != NULL);
+//        pyRequest2->addParameter("from pln_examples import *");
+//        cogserver.pushRequest(pyRequest2);
+//        TS_ASSERT_THROWS_NOTHING(cogserver.runLoopStep());
+//
+//        Request* pyRequest3 = cogserver.createRequest("py-eval");
+//        TS_ASSERT(pyRequest3 != NULL);
+//        pyRequest3->addParameter("pln_examples = PLNExamples(ATOMSPACE)");
+//        cogserver.pushRequest(pyRequest3);
+//        TS_ASSERT_THROWS_NOTHING(cogserver.runLoopStep());
+//
+//        Request* pyRequest4 = cogserver.createRequest("py-eval");
+//        TS_ASSERT(pyRequest4 != NULL);
+//        pyRequest4->addParameter("pln_examples.test_all()");
+//        //pyRequest4->addParameter("pln_examples.run_pln_example('../tests/python/test_pln/scm/specific_rules/DeductionRule.scm')");
+//        cogserver.pushRequest(pyRequest4);
+//        TS_ASSERT_THROWS_NOTHING(cogserver.runLoopStep());
+    }
+
+    PLNUTest() {
+        logger().setLevel(Logger::DEBUG);
+        logger().setPrintToStdoutFlag(true);
+
+        // Load special config file for the test
+        string configFile = PROJECT_BINARY_DIR"/tests/learning/pln/pymodule.conf";
+        try {
+            config().load(configFile.c_str(), false);
+        } catch (RuntimeException &e) {
+            std::cerr << e.getMessage() << std::endl;
+            exit(1);
+        }
+        // setup global logger
+        logger().setFilename(config()["LOG_FILE"]);
+        logger().setLevel(Logger::getLevelFromString(config()["LOG_LEVEL"]));
+        logger().setBackTraceLevel(Logger::getLevelFromString(config()["BACK_TRACE_LOG_LEVEL"]));
+        logger().setPrintToStdoutFlag(config().get_bool("LOG_TO_STDOUT"));
+
+        CogServer& cogserver = static_cast<CogServer&>(server(CogServer::createInstance));
+
+        // Blindly search a bunch of paths hoping to find the python
+        // module in one of them ...
+        const char * paths[] =
+        {
+           "./",
+           "../",
+           "../../",
+           "../../../",
+           NULL
+        };
+
+        cogserver.loadModules(paths);
+        cogserver.loadSCMModules(paths);
+    }
+
+    ~PLNUTest() {
+	    if (!CxxTest::TestTracker::tracker().suiteFailed())
+            std::remove(logger().getFilename().c_str());
+    }
+
+    void setUp() {
+    }
+
+    void tearDown() {
+    }
+};

@@ -1,0 +1,20 @@
+INCLUDE_DIRECTORIES(
+	${PYTHON_INCLUDE_PATH}
+)
+
+IF (HAVE_SERVER)
+	ADD_CXXTEST(PLNUTest)
+	ADD_DEPENDENCIES(PLNUTest
+		PythonModule
+	)
+	CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/tests/learning/pln/pymodule.conf
+		${PROJECT_BINARY_DIR}/tests/learning/pln/pymodule.conf)
+
+	TARGET_LINK_LIBRARIES(PLNUTest
+		PythonModule
+		server
+		cogutil
+	)
+	SET_TESTS_PROPERTIES(PLNUTest
+		PROPERTIES ENVIRONMENT "PYTHONPATH=${PROJECT_BINARY_DIR}/opencog/cython")
+ENDIF (HAVE_SERVER)

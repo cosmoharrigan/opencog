@@ -1,11 +1,14 @@
 #ADD_SUBDIRECTORY (hillclimbing)
 
 IF (HAVE_MOSES)
-	ADD_SUBDIRECTORY (moses)
-	ADD_SUBDIRECTORY (feature-selection)
+        ADD_SUBDIRECTORY (moses)
+        ADD_SUBDIRECTORY (feature-selection)
 ENDIF (HAVE_MOSES)
 
 IF (HAVE_DIMEMBED)
 	ADD_SUBDIRECTORY (dimensionalembedding)
 ENDIF (HAVE_DIMEMBED)
 
+IF (HAVE_CYTHON)
+    ADD_SUBDIRECTORY (pln)
+ENDIF (HAVE_CYTHON)
