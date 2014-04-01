@@ -115,7 +115,6 @@ public:
         for (i = atoms.begin(); i != atoms.end(); i++) {
             if (cogserver.getAtomSpace().getType(*i) == CONCEPT_NODE) {
                 cogserver.getAtomSpace().setSTI(*i, val);
-                cogserver.getAtomSpace().updateMaxSTI(val);
                 val += 100;
             }
         }

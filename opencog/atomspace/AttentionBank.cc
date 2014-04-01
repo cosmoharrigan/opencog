@@ -123,14 +123,12 @@ long AttentionBank::updateLTIFunds(AttentionValue::lti_t diff)
     return fundsLTI;
 }
 
-// This should be private
 void AttentionBank::updateMaxSTI(AttentionValue::sti_t m)
 {
     std::lock_guard<std::mutex> lock(lock_maxSTI);
     maxSTI.update(m);
 }
 
-// This should be private
 void AttentionBank::updateMinSTI(AttentionValue::sti_t m)
 {
     std::lock_guard<std::mutex> lock(lock_minSTI);

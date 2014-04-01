@@ -975,7 +975,7 @@ public:
     }
 
     /** Change the attentional focus boundary.
-     * Some situations may benefit from less focussed searches.
+     * Some situations may benefit from less focused searches.
      *
      * @param s New threshold
      * @return Short Term Importance threshold value
@@ -1001,25 +1001,6 @@ public:
      */
     AttentionValue::sti_t getMinSTI(bool average=true) const
     { return getAttentionBankconst().getMinSTI(average); }
-
-    /** Update the minimum STI observed in the AtomSpace.
-     * Min/max are not updated on setSTI because average is calculate by lobe
-     * cycle, although this could potentially also be handled by the cogServer.
-     *
-     * @warning Should only be used by attention allocation system.
-     * @param m New minimum STI
-     */
-    void updateMinSTI(AttentionValue::sti_t m) { getAttentionBank().updateMinSTI(m); }
-
-    /**
-     * Update the maximum STI observed in the AtomSpace. Min/max are not updated
-     * on setSTI because average is calculate by lobe cycle, although this could
-     * potentially also be handled by the cogServer.
-     *
-     * @warning Should only be used by attention allocation system.
-     * @param m New maximum STI
-     */
-    void updateMaxSTI(AttentionValue::sti_t m) { getAttentionBank().updateMaxSTI(m); }
 
     //! Clear the atomspace, remove all atoms
     void clear() { getImpl().clear(); }

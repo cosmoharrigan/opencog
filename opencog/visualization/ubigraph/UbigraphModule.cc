@@ -130,7 +130,6 @@ std::string UbigraphModule::do_ubigraphRandomSTI(Request *dummy, std::list<std::
         _cogserver.getAtomSpace().setSTI(hs[rng.randint(hs.size())], 1000);
         nNodes--;
     }
-    _cogserver.getAtomSpace().updateMaxSTI(1000);
 
     return "";
 }

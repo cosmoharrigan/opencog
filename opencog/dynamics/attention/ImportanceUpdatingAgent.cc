@@ -210,25 +210,7 @@ void ImportanceUpdatingAgent::run()
         /* Enfore sti and lti caps */
         enforceSTICap(a, handle);
         enforceLTICap(a, handle);
-
-        // Greater than max sti seen?
-        if (a->getSTI(handle) > maxSTISeen) {
-            maxSTISeen = a->getSTI(handle);
-		} else if (a->getSTI(handle) < minSTISeen) {
-            minSTISeen = a->getSTI(handle);
-		}
     }
-
-    // Update AtomSpace recent maxSTI and recent minSTI
-	if (minSTISeen > maxSTISeen) {
-		// if all Atoms have the same STI this will occur
-		minSTISeen = maxSTISeen;
-	}
-
-    a->updateMaxSTI(maxSTISeen);
-    a->updateMinSTI(minSTISeen);
-    log->debug("Max STI seen is %d, recentMaxSTI is now %d", maxSTISeen, a->getMaxSTI());
-    log->debug("Min STI seen is %d, recentMinSTI is now %d", minSTISeen, a->getMinSTI());
 
     /* Check AtomSpace funds are within bounds */
     checkAtomSpaceFunds(a);

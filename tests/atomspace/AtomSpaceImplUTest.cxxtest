@@ -721,12 +721,11 @@ public:
      */
 
     void testGetNormalisedSTI() {
-        Handle h = atomSpace->addNode(CONCEPT_NODE,"blah");
+        Handle h = atomSpace->addNode(CONCEPT_NODE, "blah");
         bool clip = false, average = false;
         TS_ASSERT_EQUALS(atomSpace->bank.getNormalisedZeroToOneSTI(h->getAttentionValue(), average, clip), 0.0f);
         average = true;
-        setSTI(h,10);
-        atomSpace->bank.updateMaxSTI(10);
+        setSTI(h, 10);
         TS_ASSERT(atomSpace->bank.getNormalisedZeroToOneSTI(h->getAttentionValue(), average, clip) > 1.0f);
         clip = true;
         TS_ASSERT_DELTA(atomSpace->bank.getNormalisedZeroToOneSTI(h->getAttentionValue(), average, clip), 1.0f, 0.001f);

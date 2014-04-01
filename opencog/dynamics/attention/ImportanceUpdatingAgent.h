@@ -88,7 +88,7 @@ class CogServer;
  * However, the number of atoms in the AtomSpace and in the attentional focus
  * will be constantly changing. In fact, an OpenCog instance may even have some
  * method of controlling the attentional focus boundary depending on how
- * focussd or quick thought and reaction needs to be. More atoms in the
+ * focused or quick thought and reaction needs to be. More atoms in the
  * Attentional Focus mean more atoms to consider during reasoning, although
  * reasoning methods can and do use atoms outside of the attentional focus if
  * those in attention are insufficient to come up with suitable results. To
