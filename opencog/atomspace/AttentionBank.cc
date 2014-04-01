@@ -59,6 +59,16 @@ void AttentionBank::AVChanged(Handle h, AttentionValuePtr old_av,
     logger().fine("AVChanged: fundsSTI = %d, old_av: %d, new_av: %d",
                    fundsSTI, old_av->getSTI(), new_av->getSTI());
 
+    // Update the minSTI and maxSTI indexes
+    if (new_av->getSTI() > getMaxSTI())
+    {
+        updateMaxSTI(new_av->getSTI());
+    }
+    else if (new_av->getSTI() < getMaxSTI())
+    {
+        updateMinSTI(new_av->getSTI());
+    }
+
     // Check if the atom crossed into or out of the AttentionalFocus
     // and notify any interested parties
     if (old_av->getSTI() < attentionalFocusBoundary &&
@@ -113,12 +123,14 @@ long AttentionBank::updateLTIFunds(AttentionValue::lti_t diff)
     return fundsLTI;
 }
 
+// This should be private
 void AttentionBank::updateMaxSTI(AttentionValue::sti_t m)
 {
     std::lock_guard<std::mutex> lock(lock_maxSTI);
     maxSTI.update(m);
 }
 
+// This should be private
 void AttentionBank::updateMinSTI(AttentionValue::sti_t m)
 {
     std::lock_guard<std::mutex> lock(lock_minSTI);
