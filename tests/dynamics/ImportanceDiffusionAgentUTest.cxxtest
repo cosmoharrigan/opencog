@@ -33,6 +33,7 @@
 #include <opencog/server/CogServer.h>
 #include <opencog/server/Agent.h>
 #include <opencog/util/Config.h>
+#include <opencog/util/algorithm.h>
 
 using namespace std;
 using namespace opencog;
@@ -112,9 +113,9 @@ public:
         AttentionValue::sti_t val = 0;
 
         atoms = createHebbianGraph(&cogserver.getAtomSpace(), "diffuse");
-        for (i = atoms.begin(); i != atoms.end(); i++) {
-            if (cogserver.getAtomSpace().getType(*i) == CONCEPT_NODE) {
-                cogserver.getAtomSpace().setSTI(*i, val);
+        foreach (Handle atom, atoms) {
+            if (cogserver.getAtomSpace().getType(atom) == CONCEPT_NODE) {
+                cogserver.getAtomSpace().setSTI(atom, val);
                 val += 100;
             }
         }

@@ -64,7 +64,7 @@ void AttentionBank::AVChanged(Handle h, AttentionValuePtr old_av,
     {
         updateMaxSTI(new_av->getSTI());
     }
-    else if (new_av->getSTI() < getMaxSTI())
+    else if (new_av->getSTI() < getMinSTI())
     {
         updateMinSTI(new_av->getSTI());
     }

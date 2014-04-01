@@ -63,10 +63,14 @@ public:
         TS_ASSERT_EQUALS(as.getMinSTI(false), 0);
         TS_ASSERT_EQUALS(as.getMaxSTI(false), 1000);
 
-        as.setSTI(n1, 1);
+        as.setSTI(n1, 10);
         as.setSTI(n3, 2000);
 
-        TS_ASSERT_EQUALS(as.getMinSTI(false), 1);
+        TS_ASSERT_EQUALS(as.getMinSTI(false), 10);
+        TS_ASSERT_EQUALS(as.getMaxSTI(false), 2000);
+
+        as.setSTI(n2, 0);
+        TS_ASSERT_EQUALS(as.getMinSTI(false), 0);
         TS_ASSERT_EQUALS(as.getMaxSTI(false), 2000);
     }
 };
