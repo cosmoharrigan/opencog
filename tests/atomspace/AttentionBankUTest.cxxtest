@@ -1,0 +1,72 @@
+/*
+ * tests/atomspace/AttentionBankUTest.cxxtest
+ *
+ * Copyright (C) 2014 Cosmo Harrigan
+ * All Rights Reserved
+ *
+ * Written by Cosmo Harrigan
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License v3 as
+ * published by the Free Software Foundation and including the exceptions
+ * at http://opencog.org/wiki/Licenses
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program; if not, write to:
+ * Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
+#include <opencog/atomspace/AtomSpace.h>
+#include <opencog/atomspace/Handle.h>
+
+using namespace opencog;
+
+class AttentionBankUTest :  public CxxTest::TestSuite
+{
+private:
+    AtomSpace as;
+
+public:
+    AttentionBankUTest()
+    {
+        logger().setLevel(Logger::INFO);
+        logger().setPrintToStdoutFlag(true);
+    }
+
+    void setUp() {}
+
+    void tearDown() {}
+
+    /*
+     * Confirm that the minimum and maximum STI indexes are updated when
+     * individual atoms have their STI updated
+     */
+    void testSTIIndexes()
+    {
+        TS_ASSERT_EQUALS(as.getMinSTI(false), 0);
+        TS_ASSERT_EQUALS(as.getMaxSTI(false), 0);
+
+        Handle n1 = as.addNode(CONCEPT_NODE, "n1");
+        Handle n2 = as.addNode(CONCEPT_NODE, "n2");
+        Handle n3 = as.addNode(CONCEPT_NODE, "n2");
+
+        as.setSTI(n1, 1000);
+        as.setSTI(n2, 500);
+        as.setSTI(n3, 0);
+
+        TS_ASSERT_EQUALS(as.getMinSTI(false), 0);
+        TS_ASSERT_EQUALS(as.getMaxSTI(false), 1000);
+
+        as.setSTI(n1, 1);
+        as.setSTI(n3, 2000);
+
+        TS_ASSERT_EQUALS(as.getMinSTI(false), 1);
+        TS_ASSERT_EQUALS(as.getMaxSTI(false), 2000);
+    }
+};
