@@ -174,8 +174,6 @@ void ImportanceUpdatingAgent::run()
     AgentSeq agents = _cogserver.runningAgents();
     AtomSpace* a = &_cogserver.getAtomSpace();
     HandleSeq hs;
-    AttentionValue::sti_t maxSTISeen = AttentionValue::MINSTI;
-    AttentionValue::sti_t minSTISeen = AttentionValue::MAXSTI;
 
     log->fine("=========== ImportanceUpdatingAgent::run =======");
     /* init iterative variables, that can't be calculated in

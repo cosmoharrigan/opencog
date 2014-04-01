@@ -78,21 +78,13 @@ class AttentionBank
     mutable std::mutex lock_funds;
 
     /**
-     * Update the minimum STI observed in the connected AtomSpace. Min/max are not updated
-     * on setSTI because average is calculate by lobe cycle, although this could
-     * potentially also be handled by the cogServer.
-     *
-     * @warning Should only be used by attention allocation system.
+     * Update the minimum STI observed in the connected AtomSpace.
      * @param m New minimum STI
      */
     void updateMinSTI(AttentionValue::sti_t m);
 
     /**
-     * Update the maximum STI observed in the connected AtomSpace. Min/max are not updated
-     * on setSTI because average is calculate by lobe cycle, although this could
-     * potentially also be handled by the cogServer.
-     *
-     * @warning Should only be used by attention allocation system.
+     * Update the maximum STI observed in the connected AtomSpace.
      * @param m New maximum STI
      */
     void updateMaxSTI(AttentionValue::sti_t m);
