@@ -267,7 +267,7 @@ void ImportanceDiffusionAgent::makeConnectionMatrix(bmatrix* &connections_,
                 if (type == INVERSE_HEBBIAN_LINK) {
                     // source and target indices swapped because inverse
                     //gsl_matrix_set(connections,sourceIndex,targetIndex,val);
-                    connections(sourceIndex,targetIndex) = val;
+                    connections(sourceIndex,targetIndex) += val;
                 } else {
                     //gsl_matrix_set(connections,targetIndex,sourceIndex,val);
                     connections(targetIndex,sourceIndex) += val;
@@ -390,11 +390,7 @@ void ImportanceDiffusionAgent::spreadImportance()
     }*/
 
     if (log->isFineEnabled()) {
-        float normAF;
-        normAF = (a->getAttentionalFocusBoundary() - a->getMinSTI(false)) / (float) ( a->getMaxSTI(false) - a->getMinSTI(false) );
-        log->fine("Result (AF at %.3f)\n",normAF);
-        printVector(&result,normAF);
-//        printVector(result,0.5f);
+        printVector(&result);
     }
 
     // set the sti of all atoms based on new values in results vector from
@@ -430,7 +426,7 @@ void ImportanceDiffusionAgent::spreadImportance()
 }
 
 void ImportanceDiffusionAgent::setScaledSTI(Handle h, float scaledSTI)
-{
+{   
     AttentionValue::sti_t val;
 
     val = (AttentionValue::sti_t) (a->getMinSTI(false) + (scaledSTI * ( a->getMaxSTI(false) - a->getMinSTI(false) )));
@@ -444,8 +440,18 @@ void ImportanceDiffusionAgent::setScaledSTI(Handle h, float scaledSTI)
         val = af + (scaledSTI * (a->getMaxSTI(false) - af ));
     }
 */
+
+    if (log->isFineEnabled()) {
+        std::ostringstream logMessage;
+        logMessage << "Handle [" << h.value() <<
+                   "] scaledSTI = " << scaledSTI <<
+                   ", getMinSTI = " << a->getMinSTI(false) <<
+                   ", getMaxSTI = " << a->getMaxSTI(false) <<
+                   ", val = " << val;
+        log->fine(logMessage.str().c_str());
+    }
+
     a->setSTI(h,val);
-    
 }
 
 void ImportanceDiffusionAgent::printMatrix(bmatrix* m)
@@ -460,17 +466,12 @@ void ImportanceDiffusionAgent::printMatrix(bmatrix* m)
     }
 }
 
-void ImportanceDiffusionAgent::printVector(bvector* v, float threshold)
+void ImportanceDiffusionAgent::printVector(bvector* v)
 {
     typedef boost::numeric::ublas::vector<float>::iterator it_t;
 
     for (it_t it = v->begin(); it != v->end(); ++it) {
-        if (*it > threshold) {
-            log->fine("(%d) %f +", it.index(), *it);
-        }
-        else {
-            log->fine("(%d) %f", it.index(), *it);
-        }
+        log->fine("(%d) %f", it.index(), *it);
     }
 }
 
@@ -506,7 +507,7 @@ double HyperbolicDecider::function(AttentionValue::sti_t s)
     norm_b = (norm_b - minSTI) / (float) ( maxSTI - minSTI );
     // Scale s to 0..1
     float norm_s = (s - minSTI) / (float) ( maxSTI - minSTI );
-    return (tanh(shape*(norm_s-norm_b))+1.0f)/2.0f;
+    return (tanh(shape * (norm_s - norm_b)) + 1.0f) / 2.0f;
 }
 
 void HyperbolicDecider::setFocusBoundary(float b)
@@ -518,7 +519,7 @@ void HyperbolicDecider::setFocusBoundary(float b)
 
 double StepDecider::function(AttentionValue::sti_t s)
 {
-    return (s>focusBoundary ? 1.0f : 0.0f);
+    return s > focusBoundary ? 1.0f : 0.0f;
 }
 
 void StepDecider::setFocusBoundary(float b)
@@ -529,7 +530,13 @@ void StepDecider::setFocusBoundary(float b)
     focusBoundary = (b > 0.0f)?
         (int) (af + (b * (a.getMaxSTI(false) - af))) :
         (int) (af + (b * (af - a.getMinSTI(false))));
-
+    // temporary-->
+    printf("StepDecider::setFocusboundary\n");
+    printf(std::to_string(focusBoundary).c_str());
+    printf("\n");
+    printf(std::to_string(b).c_str());
+    printf("\n");
+    // <<--
 }
 
 };
