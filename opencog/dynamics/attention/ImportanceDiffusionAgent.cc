@@ -530,14 +530,6 @@ void StepDecider::setFocusBoundary(float b)
     focusBoundary = (b > 0.0f)?
         (int) (af + (b * (a.getMaxSTI(false) - af))) :
         (int) (af + (b * (af - a.getMinSTI(false))));
-    // temporary-->
-    printf("StepDecider::setFocusboundary\n");
-    printf(std::to_string(focusBoundary).c_str());
-    printf("\n");
-    printf(std::to_string(b).c_str());
-    printf("\n");
-    // <<--
 }
 
-};
-
+}
