@@ -67,6 +67,8 @@ ImportanceDiffusionAgent::ImportanceDiffusionAgent(CogServer& cs) :
     // Provide a logger
     log = NULL;
     setLogger(new opencog::Logger("ImportanceDiffusionAgent.log", Logger::FINE, true));
+
+    a = &_cogserver.getAtomSpace();
 }
 
 void ImportanceDiffusionAgent::setLogger(Logger* _log)
@@ -164,6 +166,7 @@ int ImportanceDiffusionAgent::makeDiffusionAtomsMap(std::map<Handle,int> &diffus
 
         for (targetItr = targets.begin(); targetItr != targets.end();
                 ++targetItr) {
+            // Check if the target is already in the map, and add it if not
             if (diffusionAtomsMap.find(*targetItr) == diffusionAtomsMap.end()) {
                 diffusionAtomsMap[*targetItr] = totalDiffusionAtoms;
 #ifdef DEBUG
@@ -199,6 +202,8 @@ void ImportanceDiffusionAgent::makeSTIVector(bvector* &stiVector,
 // be a good idea, but this messes up the conservation of STI
 //      (*stiVector)((*i).second) = a->getNormalisedSTI(dAtom,false)+1.0f)/2.0f);
         (*stiVector)((*i).second) = a->getNormalisedZeroToOneSTI(dAtom,false);
+        log->fine("Normalized ZeroToOne STI for atom [%lu]: %f", dAtom.value(),
+                  a->getNormalisedZeroToOneSTI(dAtom, false));
 #ifdef DEBUG
         totalSTI += a->getSTI(dAtom);
 #endif
@@ -319,6 +324,9 @@ void ImportanceDiffusionAgent::makeConnectionMatrix(bmatrix* &connections_,
 #ifdef DEBUG
     log->fine("Sum probability for column:");
 #endif
+    
+    int _DEBUG_numTimes = 0;
+    
     for (unsigned int j = 0; j < connections.size2(); j++) {
         double sumProb = 0.0f;
         for (unsigned int i = 0; i < connections.size1(); i++) {
@@ -329,17 +337,28 @@ void ImportanceDiffusionAgent::makeConnectionMatrix(bmatrix* &connections_,
 #endif
 
         if (sumProb > maxSpreadPercentage) {
+            _DEBUG_numTimes++;
+#ifdef DEBUG
+            log->fine("Start: sumProb > maxSpreadPercentage");
+#endif
             for (unsigned int i = 0; i < connections.size1(); i++) {
                 connections(i,j) = connections(i,j)
                         / (sumProb/maxSpreadPercentage) ;
             }
             sumProb = maxSpreadPercentage;
+#ifdef DEBUG
+            log->fine("End: sumProb > maxSpreadPercentage");
+#endif
         }
 #ifdef DEBUG
         log->fine("%d after - %1.3f", j, sumProb);
 #endif
         //gsl_matrix_set(connections,j,j,1.0-sumProb);
         connections(j,j) = 1.0-sumProb;
+        
+#ifdef DEBUG
+        log->debug("****_DEBUG_numTimes so far: %d", _DEBUG_numTimes);
+#endif
     }
     
 #ifdef DEBUG
@@ -347,6 +366,10 @@ void ImportanceDiffusionAgent::makeConnectionMatrix(bmatrix* &connections_,
         log->debug("Hebbian connection matrix:");
         printMatrix(connections_);
     }
+#endif
+    
+#ifdef DEBUG
+    log->debug("****_DEBUG_numTimes total: %d", _DEBUG_numTimes);
 #endif
 }
 
@@ -374,6 +397,9 @@ void ImportanceDiffusionAgent::spreadImportance()
       a->getHandlesByType(out_hi, HEBBIAN_LINK, true);
     }
 
+#ifdef DEBUG
+    log->debug("Calling function: makeDiffusionAtomsMap");
+#endif
     totalDiffusionAtoms = makeDiffusionAtomsMap(diffusionAtomsMap, links);
 
     // No Hebbian Links or atoms?
@@ -384,8 +410,14 @@ void ImportanceDiffusionAgent::spreadImportance()
     log->fine("Creating normalized STI vector.");
 #endif
 
+#ifdef DEBUG
+    log->debug("Calling function: makeSTIVector");
+#endif    
     makeSTIVector(stiVector,totalDiffusionAtoms,diffusionAtomsMap);
 
+#ifdef DEBUG
+    log->debug("Calling function: makeConnectionMatrix");
+#endif
     makeConnectionMatrix(connections, totalDiffusionAtoms, diffusionAtomsMap, links);
 
 //    result = gsl_vector_alloc(totalDiffusionAtoms);
@@ -393,6 +425,9 @@ void ImportanceDiffusionAgent::spreadImportance()
 
 //    result = new bvector(totalDiffusionAtoms);
 //    result = new bvector(prod(*connections, *stiVector));
+#ifdef DEBUG
+    log->debug("Calling function: prod");
+#endif
     bvector result = prod(*connections, *stiVector);
     
 /*    if (errorNo) {
@@ -418,7 +453,7 @@ void ImportanceDiffusionAgent::spreadImportance()
         totalSTI_After += a->getSTI(dAtom);
 #endif
     }
-#if 0 //def DEBUG
+#ifdef DEBUG
     if (totalSTI != totalSTI_After) {
         // This warning is often logged because of floating point round offs
         // when converting from normalised to actual STI values after diffusion.
