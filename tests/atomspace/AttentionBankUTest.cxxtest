@@ -1,3 +1,5 @@
+// TODO: CHANGE
+
 /*
  * tests/atomspace/AttentionBankUTest.cxxtest
  *
@@ -30,7 +32,7 @@ using namespace opencog;
 class AttentionBankUTest :  public CxxTest::TestSuite
 {
 private:
-    AtomSpace as;
+    AtomSpace atomSpace;
 
 public:
     AttentionBankUTest()
@@ -44,33 +46,49 @@ public:
     void tearDown() {}
 
     /*
-     * Confirm that the minimum and maximum STI indexes are updated when
-     * individual atoms have their STI updated
-     */
-    void testSTIIndexes()
+     * Confirm that the AttentionBank data structure that stores minimum and
+     * maximum STI values is updated when individual atoms have their STI
+     * updated
+     */   
+    void testImportanceBoundaries()
     {
-        TS_ASSERT_EQUALS(as.getMinSTI(false), 0);
-        TS_ASSERT_EQUALS(as.getMaxSTI(false), 0);
+        TS_ASSERT_EQUALS(atomSpace.getMinSTI(false), 0);
+        TS_ASSERT_EQUALS(atomSpace.getMaxSTI(false), 0);
 
-        Handle n1 = as.addNode(CONCEPT_NODE, "n1");
-        Handle n2 = as.addNode(CONCEPT_NODE, "n2");
-        Handle n3 = as.addNode(CONCEPT_NODE, "n2");
+        Handle n1 = atomSpace.addNode(CONCEPT_NODE, "n1");
+        Handle n2 = atomSpace.addNode(CONCEPT_NODE, "n2");
+        Handle n3 = atomSpace.addNode(CONCEPT_NODE, "n3");
 
-        as.setSTI(n1, 1000);
-        as.setSTI(n2, 500);
-        as.setSTI(n3, 0);
+        atomSpace.setSTI(n1, 1000);
+        TS_ASSERT_EQUALS(atomSpace.getMinSTI(false), 0);
+        TS_ASSERT_EQUALS(atomSpace.getMaxSTI(false), 1000);
 
-        TS_ASSERT_EQUALS(as.getMinSTI(false), 0);
-        TS_ASSERT_EQUALS(as.getMaxSTI(false), 1000);
+        atomSpace.setSTI(n2, 500);
+        atomSpace.setSTI(n3, 0);
+        TS_ASSERT_EQUALS(atomSpace.getMinSTI(false), 0);
+        TS_ASSERT_EQUALS(atomSpace.getMaxSTI(false), 1000);
 
-        as.setSTI(n1, 10);
-        as.setSTI(n3, 2000);
+        atomSpace.setSTI(n1, 10);
+        atomSpace.setSTI(n3, 20000);
+        TS_ASSERT_EQUALS(atomSpace.getMinSTI(false), 10);
+        TS_ASSERT_EQUALS(atomSpace.getMaxSTI(false), 20000);
 
-        TS_ASSERT_EQUALS(as.getMinSTI(false), 10);
-        TS_ASSERT_EQUALS(as.getMaxSTI(false), 2000);
+        atomSpace.setSTI(n1, 5);
+        atomSpace.setSTI(n2, 0);
+        atomSpace.setSTI(n3, 0);
+        TS_ASSERT_EQUALS(atomSpace.getMinSTI(false), 0);
+        TS_ASSERT_EQUALS(atomSpace.getMaxSTI(false), 5);
 
-        as.setSTI(n2, 0);
-        TS_ASSERT_EQUALS(as.getMinSTI(false), 0);
-        TS_ASSERT_EQUALS(as.getMaxSTI(false), 2000);
+        atomSpace.setSTI(n1, 1000);
+        atomSpace.setSTI(n2, 1000);
+        atomSpace.setSTI(n3, 1000);
+        TS_ASSERT_EQUALS(atomSpace.getMinSTI(false), 1000);
+        TS_ASSERT_EQUALS(atomSpace.getMaxSTI(false), 1000);
+
+        atomSpace.setSTI(n1, 20);
+        atomSpace.setSTI(n2, 20);
+        atomSpace.setSTI(n3, 19);
+        TS_ASSERT_EQUALS(atomSpace.getMinSTI(false), 19);
+        TS_ASSERT_EQUALS(atomSpace.getMaxSTI(false), 20);
     }
 };

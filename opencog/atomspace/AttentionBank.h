@@ -46,6 +46,8 @@ class AtomTable;
 
 class AttentionBank
 {
+    AtomTable* atomTable;
+
     /** The connection by which we are notified of AV changes */
     boost::signals2::connection AVChangedConnection;
     void AVChanged(Handle, AttentionValuePtr, AttentionValuePtr);
@@ -64,11 +66,13 @@ class AttentionBank
     opencog::recent_val<AttentionValue::sti_t> maxSTI;
     opencog::recent_val<AttentionValue::sti_t> minSTI;
 
+    // todo: make this one
     mutable std::mutex lock_maxSTI;
     mutable std::mutex lock_minSTI;
 
-    /* These indicate the amount importance funds available in the
-     * AtomSpace */
+    /* These indicate the amount of importance funds available in the
+     * AtomSpace
+     */
     long fundsSTI;
     long fundsLTI;
 
@@ -77,20 +81,8 @@ class AttentionBank
 
     mutable std::mutex lock_funds;
 
-    /**
-     * Update the minimum STI observed in the connected AtomSpace.
-     * @param m New minimum STI
-     */
-    void updateMinSTI(AttentionValue::sti_t m);
-
-    /**
-     * Update the maximum STI observed in the connected AtomSpace.
-     * @param m New maximum STI
-     */
-    void updateMaxSTI(AttentionValue::sti_t m);
-
 public:
-    /** The table notifies us about AV changes */
+    /** The AtomTable notifies us about AV changes */
     AttentionBank(AtomTable*);
     ~AttentionBank();
 
@@ -128,12 +120,20 @@ public:
      * Get the LTI funds available in the AtomSpace pool.
      *
      * @return LTI funds available
-
      */
     long getLTIFunds() const;
 
     long updateSTIFunds(AttentionValue::sti_t diff);
     long updateLTIFunds(AttentionValue::lti_t diff);
+
+    /**
+     * Requests the current minimum and maximum STI values present in the
+     * AtomSpace from the AtomSpace and stores them in a local data structure
+     * accessible with the getMaxSTI() and getMinSTI() operations.
+     * The local data structure will not be updated unless this method is
+     * called at the start of the mind agent's cycle.
+     */
+    void updateSTIBoundaries();
 
     /**
      * Get attentional focus boundary, generally atoms below
@@ -161,7 +161,7 @@ public:
      * maximum STI, otherwise return the actual maximum.
      * @return Maximum STI
      */
-    AttentionValue::sti_t getMaxSTI(bool average=true) const;
+    AttentionValue::sti_t getMaxSTI(bool average=true);
 
     /**
      * Get the minimum STI observed in the AtomSpace.
@@ -170,7 +170,7 @@ public:
      * minimum STI, otherwise return the actual maximum.
      * @return Minimum STI
      */
-    AttentionValue::sti_t getMinSTI(bool average=true) const;
+    AttentionValue::sti_t getMinSTI(bool average=true);
 
     /** Change the Very-Long-Term Importance of an attention value holder */
     //void setVLTI(AttentionValueHolderPtr avh, AttentionValue::vlti_t);
@@ -186,7 +186,7 @@ public:
      * range can be return if average=true
      * @return normalised STI between -1..1
      */
-    float getNormalisedSTI(AttentionValuePtr, bool average, bool clip) const;
+    float getNormalisedSTI(AttentionValuePtr, bool average, bool clip);
 
     /** Retrieve the linearly normalised Short-Term Importance between 0..1
      * for a given AttentionValue.
@@ -198,7 +198,7 @@ public:
      * range can be return if average=true
      * @return normalised STI between 0..1
      */
-    float getNormalisedZeroToOneSTI(AttentionValuePtr, bool average, bool clip) const;
+    float getNormalisedZeroToOneSTI(AttentionValuePtr, bool average, bool clip);
 };
 
 /** @}*/

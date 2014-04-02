@@ -126,7 +126,17 @@ void ImportanceDiffusionAgent::run()
 #ifdef DEBUG
     totalSTI = 0;
 #endif
+    init();
     spreadImportance();
+}
+
+void ImportanceDiffusionAgent::init()
+{
+    // ImportanceDiffusionAgent updates the AttentionBank boundaries from the
+    // AtomSpace importance boundaries once, before the updates start.
+    // Otherwise, each update can cause the value to change, which could cause
+    // unexpected results in the calculations.
+    a->getAttentionBank().updateSTIBoundaries();
 }
 
 #define toFloat getMean
@@ -429,15 +439,19 @@ void ImportanceDiffusionAgent::setScaledSTI(Handle h, float scaledSTI)
 {   
     AttentionValue::sti_t val;
 
-    val = (AttentionValue::sti_t) (a->getMinSTI(false) + (scaledSTI * ( a->getMaxSTI(false) - a->getMinSTI(false) )));
+//    val = (AttentionValue::sti_t) (a->getMinSTI(false) + (scaledSTI * ( a->getMaxSTI(false) - a->getMinSTI(false) )));
+    val = (AttentionValue::sti_t) (a->getAttentionBank().getMinSTI(false) +
+                                   (scaledSTI *
+                                    ( a->getAttentionBank().getMaxSTI(false) -
+                                      a->getAttentionBank().getMinSTI(false))));
 /*
     AtomSpace *a = _cogserver.getAtomSpace();
     float af = a->getAttentionalFocusBoundary();
     scaledSTI = (scaledSTI * 2) - 1;
     if (scaledSTI <= 1.0) {
-        val = a->getMinSTI(false) + (scaledSTI * ( a->getMinSTI(false) - af ));
+        val = a->getMinSTI(false) + (scaledSTI * ( a->getAttentionBank().(false) - af ));
     } else {
-        val = af + (scaledSTI * (a->getMaxSTI(false) - af ));
+        val = af + (scaledSTI * (a->getAttentionBank().getMaxSTI(false) - af ));
     }
 */
 
@@ -445,8 +459,8 @@ void ImportanceDiffusionAgent::setScaledSTI(Handle h, float scaledSTI)
         std::ostringstream logMessage;
         logMessage << "Handle [" << h.value() <<
                    "] scaledSTI = " << scaledSTI <<
-                   ", getMinSTI = " << a->getMinSTI(false) <<
-                   ", getMaxSTI = " << a->getMaxSTI(false) <<
+                   ", getMinSTI = " << a->getAttentionBank().getMinSTI(false) <<
+                   ", getMaxSTI = " << a->getAttentionBank().getMaxSTI(false) <<
                    ", val = " << val;
         log->fine(logMessage.str().c_str());
     }
@@ -498,8 +512,8 @@ double HyperbolicDecider::function(AttentionValue::sti_t s)
     AtomSpace& a = _cogserver.getAtomSpace();
     // Convert boundary from -1..1 to 0..1
     float af = a.getAttentionalFocusBoundary();
-    float minSTI = a.getMinSTI(false);
-    float maxSTI = a.getMaxSTI(false);
+    float minSTI = a.getAttentionBank().getMinSTI(false);
+    float maxSTI = a.getAttentionBank().getMaxSTI(false);
     float norm_b = focusBoundary > 0.0f ?
         af + (focusBoundary * (maxSTI - af)) :
         af + (focusBoundary * (af - minSTI ));
@@ -528,8 +542,8 @@ void StepDecider::setFocusBoundary(float b)
     // Convert to an exact STI amount
     float af = a.getAttentionalFocusBoundary();
     focusBoundary = (b > 0.0f)?
-        (int) (af + (b * (a.getMaxSTI(false) - af))) :
-        (int) (af + (b * (af - a.getMinSTI(false))));
+        (int) (af + (b * (a.getAttentionBank().getMaxSTI(false) - af))) :
+        (int) (af + (b * (af - a.getAttentionBank().getMinSTI(false))));
 }
 
 }

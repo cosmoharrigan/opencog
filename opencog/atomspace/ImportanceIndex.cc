@@ -38,7 +38,9 @@ using namespace opencog;
 
 ImportanceIndex::ImportanceIndex(void)
 {
-	resize(IMPORTANCE_INDEX_SIZE+1);
+    resize(IMPORTANCE_INDEX_SIZE+1);
+    minSTIIndex = 0;
+    maxSTIIndex = 0;
 }
 
 unsigned int ImportanceIndex::importanceBin(short importance)
@@ -48,14 +50,117 @@ unsigned int ImportanceIndex::importanceBin(short importance)
 	return (importance + 32768) / IMPORTANCE_INDEX_SIZE;
 }
 
-void ImportanceIndex::updateImportance(AtomPtr atom, int bin)
+void ImportanceIndex::updateImportanceBin(AtomPtr atom, int bin)
 {
-	Handle h = atom->getHandle();
-	int newbin = importanceBin(atom->getAttentionValue()->getSTI());
-	if (bin == newbin) return;
+    Handle h = atom->getHandle();
 
-	remove(bin, h);
-	insert(newbin, h);
+    int newbin = importanceBin(atom->getAttentionValue()->getSTI());
+    if (bin == newbin) return;
+
+    remove(bin, h);
+    insert(newbin, h);
+}
+
+AttentionValue::sti_t ImportanceIndex::calculateMinSTI()
+{
+    AttentionValue::sti_t minValue;
+
+    // Start with the lowest bin, and only continue searching until a bin
+    // with atoms is found, and then choose the lowest STI from that bin
+    for (unsigned int bin = 0; bin < IMPORTANCE_INDEX_SIZE; bin++)
+    {
+        if (idx[bin].size() > 0)
+        {
+            // search this bin for the min value
+            UnorderedUUIDSet& band = idx[bin];
+            UnorderedUUIDSet::iterator hit;
+            bool first = true;
+            for (hit = band.begin(); hit != band.end(); ++hit)
+            {
+                Handle h(*hit);
+
+                AttentionValuePtr av(h->getAttentionValue());
+
+                if (first)
+                {
+                    minValue = av->getSTI();
+                    first = false;
+                }
+                else if (av->getSTI() < minValue) // todo: compress
+                {
+                    minValue = av->getSTI();
+                }
+            }
+
+            break;
+        }
+    }
+
+    return minValue;
+}
+
+AttentionValue::sti_t ImportanceIndex::calculateMaxSTI()
+{
+    AttentionValue::sti_t maxValue;
+
+    // Start with the highest bin, and only continue searching until a bin
+    // with atoms is found, and then choose the highest STI from that bin
+    for (unsigned int bin = IMPORTANCE_INDEX_SIZE - 1; bin >= 0; bin--)
+    {
+        if (idx[bin].size() > 0)
+        {
+            // search this bin for the max value
+            UnorderedUUIDSet& band = idx[bin];
+            UnorderedUUIDSet::iterator hit;
+            bool first = true;
+            for (hit = band.begin(); hit != band.end(); ++hit)
+            {
+                Handle h(*hit);
+
+                AttentionValuePtr av(h->getAttentionValue());
+
+                if (first)
+                {
+                    maxValue = av->getSTI();
+                    first = false;
+                }
+                else if (av->getSTI() > maxValue)
+                {
+                    maxValue = av->getSTI();
+                }
+            }
+
+            break;
+        }
+    }
+
+    return maxValue;
+}
+
+// compare performance
+void ImportanceIndex::updateImportanceBoundaries(
+        AttentionValue::sti_t oldSTI, AttentionValue::sti_t newSTI)
+{
+    // At the edge cases, we don't know if this atom was the only atom
+    // defining the boundary, so we have to recalculate the boundary
+    if (oldSTI == minSTIIndex)
+    {
+        minSTIIndex = calculateMinSTI();
+    }
+    if (oldSTI == maxSTIIndex)
+    {
+        maxSTIIndex = calculateMaxSTI();
+    }
+
+    // If the importance crossed a boundary, it defines a new boundary
+    if (newSTI > maxSTIIndex)
+    {
+        maxSTIIndex = newSTI;
+    }
+    if (newSTI < minSTIIndex)
+    {
+        minSTIIndex = newSTI;
+    }
 }
 
 void ImportanceIndex::insertAtom(AtomPtr atom)

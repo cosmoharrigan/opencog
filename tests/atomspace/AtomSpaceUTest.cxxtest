@@ -690,6 +690,50 @@ public:
         atomSpace->getHandlesByType(back_inserter(namedAtoms), NODE, true);
         TS_ASSERT_EQUALS(namedAtoms.size(), 3);
     }
+
+    void testImportanceBoundaries()
+    {
+        atomSpace->clear();
+
+        TS_ASSERT_EQUALS(atomSpace->getMinSTI(false), 0);
+        TS_ASSERT_EQUALS(atomSpace->getMaxSTI(false), 0);
+
+        Handle n1 = atomSpace->addNode(CONCEPT_NODE, "n1");
+        Handle n2 = atomSpace->addNode(CONCEPT_NODE, "n2");
+        Handle n3 = atomSpace->addNode(CONCEPT_NODE, "n3");
+
+        atomSpace->setSTI(n1, 1000);
+        TS_ASSERT_EQUALS(atomSpace->getMinSTI(false), 0);
+        TS_ASSERT_EQUALS(atomSpace->getMaxSTI(false), 1000);
+
+        atomSpace->setSTI(n2, 500);
+        atomSpace->setSTI(n3, 0);
+        TS_ASSERT_EQUALS(atomSpace->getMinSTI(false), 0);
+        TS_ASSERT_EQUALS(atomSpace->getMaxSTI(false), 1000);
+
+        atomSpace->setSTI(n1, 10);
+        atomSpace->setSTI(n3, 20000);
+        TS_ASSERT_EQUALS(atomSpace->getMinSTI(false), 10);
+        TS_ASSERT_EQUALS(atomSpace->getMaxSTI(false), 20000);
+
+        atomSpace->setSTI(n1, 5);
+        atomSpace->setSTI(n2, 0);
+        atomSpace->setSTI(n3, 0);
+        TS_ASSERT_EQUALS(atomSpace->getMinSTI(false), 0);
+        TS_ASSERT_EQUALS(atomSpace->getMaxSTI(false), 5);
+
+        atomSpace->setSTI(n1, 1000);
+        atomSpace->setSTI(n2, 1000);
+        atomSpace->setSTI(n3, 1000);
+        TS_ASSERT_EQUALS(atomSpace->getMinSTI(false), 1000);
+        TS_ASSERT_EQUALS(atomSpace->getMaxSTI(false), 1000);
+
+        atomSpace->setSTI(n1, 20);
+        atomSpace->setSTI(n2, 20);
+        atomSpace->setSTI(n3, 19);
+        TS_ASSERT_EQUALS(atomSpace->getMinSTI(false), 19);
+        TS_ASSERT_EQUALS(atomSpace->getMaxSTI(false), 20);
+    }
 };
 
 AtomSpace *AtomSpaceUTest::atomSpace = NULL;

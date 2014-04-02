@@ -32,12 +32,14 @@ using namespace opencog;
 
 AttentionBank::AttentionBank(AtomTable* atab)
 {
+    atomTable = atab;
+
     startingFundsSTI = fundsSTI = config().get_int("STARTING_STI_FUNDS");
     startingFundsLTI = fundsLTI = config().get_int("STARTING_LTI_FUNDS");
     attentionalFocusBoundary = 1;
 
     AVChangedConnection = 
-        atab->AVChangedSignal().connect(
+        atomTable->AVChangedSignal().connect(
             boost::bind(&AttentionBank::AVChanged, this, _1, _2, _3));
 }
 
@@ -58,16 +60,6 @@ void AttentionBank::AVChanged(Handle h, AttentionValuePtr old_av,
     
     logger().fine("AVChanged: fundsSTI = %d, old_av: %d, new_av: %d",
                    fundsSTI, old_av->getSTI(), new_av->getSTI());
-
-    // Update the minSTI and maxSTI indexes
-    if (new_av->getSTI() > getMaxSTI())
-    {
-        updateMaxSTI(new_av->getSTI());
-    }
-    else if (new_av->getSTI() < getMinSTI())
-    {
-        updateMinSTI(new_av->getSTI());
-    }
 
     // Check if the atom crossed into or out of the AttentionalFocus
     // and notify any interested parties
@@ -123,21 +115,23 @@ long AttentionBank::updateLTIFunds(AttentionValue::lti_t diff)
     return fundsLTI;
 }
 
-void AttentionBank::updateMaxSTI(AttentionValue::sti_t m)
+// ----------------------------------------------------------------------------
+
+/** Note:
+ *    AttentionBank still has the following methods because it maintains a
+ *    data structure that keeps track of the decay of the values. If that data
+ *    structure were not needed, then it could just use the AtomTable methods.
+ */
+
+void AttentionBank::updateSTIBoundaries()
 {
     std::lock_guard<std::mutex> lock(lock_maxSTI);
-    maxSTI.update(m);
+    maxSTI.update((AttentionValue::sti_t) atomTable->getMaxSTI());
+    minSTI.update((AttentionValue::sti_t) atomTable->getMinSTI());
 }
 
-void AttentionBank::updateMinSTI(AttentionValue::sti_t m)
+AttentionValue::sti_t AttentionBank::getMaxSTI(bool average)
 {
-    std::lock_guard<std::mutex> lock(lock_minSTI);
-    minSTI.update(m);
-}
-
-AttentionValue::sti_t AttentionBank::getMaxSTI(bool average) const
-{
-    std::lock_guard<std::mutex> lock(lock_maxSTI);
     if (average) {
         return (AttentionValue::sti_t) maxSTI.recent;
     } else {
@@ -145,15 +139,16 @@ AttentionValue::sti_t AttentionBank::getMaxSTI(bool average) const
     }
 }
 
-AttentionValue::sti_t AttentionBank::getMinSTI(bool average) const
+AttentionValue::sti_t AttentionBank::getMinSTI(bool average)
 {
-    std::lock_guard<std::mutex> lock(lock_minSTI);
     if (average) {
         return (AttentionValue::sti_t) minSTI.recent;
     } else {
         return minSTI.val;
     }
 }
+
+// ----------------------------------------------------------------------------
 
 AttentionValue::sti_t AttentionBank::getAttentionalFocusBoundary() const
 {
@@ -166,7 +161,7 @@ AttentionValue::sti_t AttentionBank::setAttentionalFocusBoundary(AttentionValue:
     return boundary;
 }
 
-float AttentionBank::getNormalisedSTI(AttentionValuePtr av, bool average, bool clip) const
+float AttentionBank::getNormalisedSTI(AttentionValuePtr av, bool average, bool clip)
 {
     // get normalizer (maxSTI - attention boundary)
     int normaliser;
@@ -192,7 +187,7 @@ float AttentionBank::getNormalisedSTI(AttentionValuePtr av, bool average, bool c
     }
 }
 
-float AttentionBank::getNormalisedZeroToOneSTI(AttentionValuePtr av, bool average, bool clip) const
+float AttentionBank::getNormalisedZeroToOneSTI(AttentionValuePtr av, bool average, bool clip)
 {
     int normaliser;
     float val;

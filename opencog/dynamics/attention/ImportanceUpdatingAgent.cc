@@ -112,13 +112,19 @@ ImportanceUpdatingAgent::~ImportanceUpdatingAgent()
     if (rng) delete rng;
 }
 
-void ImportanceUpdatingAgent::init()
+void ImportanceUpdatingAgent::init(AtomSpace *a)
 {
     // Not sure exactly what initial estimates should be made...
     log->fine("ImportanceUpdatingAgent::init");
     initialEstimateMade = true;
 	// Perhaps initiate recent_val members to initial
 	// size before the mind process begins.
+
+    // ImportanceDiffusionAgent updates the AttentionBank boundaries from the
+    // AtomSpace importance boundaries once, before the updates start.
+    // Otherwise, each update can cause the value to change, which could cause
+    // unexpected results in the calculations.
+    a->getAttentionBank().updateSTIBoundaries();
 }
 
 void ImportanceUpdatingAgent::setLogger(Logger* _log)
@@ -178,7 +184,7 @@ void ImportanceUpdatingAgent::run()
     log->fine("=========== ImportanceUpdatingAgent::run =======");
     /* init iterative variables, that can't be calculated in
      * (no pointer to CogServer there) */
-    if (!initialEstimateMade) init();
+    if (!initialEstimateMade) init(a);
 
     /* Calculate attentional focus sizes */
     updateAttentionalFocusSizes(a);
@@ -575,7 +581,7 @@ AttentionValue::sti_t ImportanceUpdatingAgent::calculateSTIRent(AtomSpace* a, At
 				double multiplier = rentFunctionParams[1];
 				double x;
 				x = c - a->getAttentionalFocusBoundary();
-				x = x / (a->getMaxSTI() - a->getAttentionalFocusBoundary());
+				x = x / (a->getAttentionBank().getMaxSTI() - a->getAttentionalFocusBoundary());
 				multiplier = std::max(0.0, (exp(x) - (1.0 - y))/(1.0 + y));
 				stiRentCharged = (AttentionValue::sti_t) (multiplier * STIAtomRent);
 			}
@@ -589,7 +595,7 @@ AttentionValue::sti_t ImportanceUpdatingAgent::calculateSTIRent(AtomSpace* a, At
 				double x;
 				percentAmnesty = percentAmnesty-0.05;
 				x = c - a->getAttentionalFocusBoundary();
-				x = x / (a->getMaxSTI() - a->getAttentionalFocusBoundary());
+				x = x / (a->getAttentionBank().getMaxSTI() - a->getAttentionalFocusBoundary());
 				if (percentAmnesty < 0) percentAmnesty = 0;
 				multiplier = std::max(0.0, ::log((x - percentAmnesty) * 20) / 2.0);
 				stiRentCharged = (AttentionValue::sti_t) (multiplier * STIAtomRent);

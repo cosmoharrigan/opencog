@@ -80,6 +80,9 @@ public:
     AtomSpace(const AtomSpace&);
     ~AtomSpace();
 
+    // TODO: AttentionBank could be separated from AtomSpace, AtomSpaceImpl
+    // and AtomTable
+
     inline AttentionBank& getAttentionBank()
     { return _atomSpaceImpl->bank; }
 
@@ -479,8 +482,8 @@ public:
      * range can be returned if average=true
      * @return normalised STI between -1..1
      */
-    float getNormalisedSTI(Handle h, bool average=true, bool clip=false) const {
-        return getAttentionBankconst().getNormalisedSTI(h->getAttentionValue(), average, clip);
+    float getNormalisedSTI(Handle h, bool average=true, bool clip=false) {
+        return getAttentionBank().getNormalisedSTI(h->getAttentionValue(), average, clip);
     }
 
     /** Retrieve the linearly normalised Short-Term Importance between 0..1
@@ -493,8 +496,8 @@ public:
      * range can be returned if average=true
      * @return normalised STI between 0..1
      */
-    float getNormalisedZeroToOneSTI(Handle h, bool average=true, bool clip=false) const {
-        return getAttentionBankconst().getNormalisedZeroToOneSTI(h->getAttentionValue(), average, clip);
+    float getNormalisedZeroToOneSTI(Handle h, bool average=true, bool clip=false) {
+        return getAttentionBank().getNormalisedZeroToOneSTI(h->getAttentionValue(), average, clip);
     }
 
     /**
@@ -990,8 +993,8 @@ public:
      * maximum STI, otherwise return the actual maximum.
      * @return Maximum STI
      */
-    AttentionValue::sti_t getMaxSTI(bool average=true) const
-    { return getAttentionBankconst().getMaxSTI(average); }
+    AttentionValue::sti_t getMaxSTI(bool average=true)
+    { return getImpl().atomTable.getMaxSTI(); }
 
     /** Get the minimum STI observed in the AtomSpace.
      *
@@ -999,8 +1002,8 @@ public:
      * minimum STI, otherwise return the actual maximum.
      * @return Minimum STI
      */
-    AttentionValue::sti_t getMinSTI(bool average=true) const
-    { return getAttentionBankconst().getMinSTI(average); }
+    AttentionValue::sti_t getMinSTI(bool average=true)
+    { return getImpl().atomTable.getMinSTI(); }
 
     //! Clear the atomspace, remove all atoms
     void clear() { getImpl().clear(); }

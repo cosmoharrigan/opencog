@@ -41,6 +41,12 @@ class AtomTable;
  */
 class ImportanceIndex: public FixedIntegerIndex
 {
+private:
+    // Maintains an index of the minimum and maximum STI values
+    AttentionValue::sti_t minSTIIndex;
+    AttentionValue::sti_t maxSTIIndex;
+    AttentionValue::sti_t calculateMinSTI();
+    AttentionValue::sti_t calculateMaxSTI();
 public:
     ImportanceIndex(void);
     void insertAtom(const AtomPtr);
@@ -53,8 +59,31 @@ public:
      * @param The atom whose importance index will be updated.
      * @param The old importance bin where the atom originally was.
      */
-    void updateImportance(AtomPtr, int);
-    
+
+    void updateImportanceBin(AtomPtr, int);
+
+    /** Updates the importance boundaries for the ImportanceIndex, which
+     * contains the minimum and maximum STI values that exist in the index
+     *
+     * @param The old STI value of the atom
+     * @param The new STI value of the atom
+     */
+    void updateImportanceBoundaries(AttentionValue::sti_t, AttentionValue::sti_t);
+
+    /** Returns the lower boundary representing the atom with the lowest
+     *  importance in the index
+     *
+     * @ return The minimum STI value in the index
+     */
+    AttentionValue::sti_t getMinSTI() const { return minSTIIndex; }
+
+    /** Returns the lower boundary representing the atom with the highest
+     *  importance in the index
+     *
+     * @ return The minimum STI value in the index
+     */
+    AttentionValue::sti_t getMaxSTI() const { return maxSTIIndex; }
+
     UnorderedHandleSet getHandleSet(const AtomTable*,
                               AttentionValue::sti_t,
                               AttentionValue::sti_t) const;

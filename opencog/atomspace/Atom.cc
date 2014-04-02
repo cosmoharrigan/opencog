@@ -182,6 +182,9 @@ void Atom::setAttentionValue(AttentionValuePtr av) throw (RuntimeException)
         _atomTable->updateImportanceIndex(a, oldBin);
     }
 
+    // Update the importance index minimum and maximum STI boundary values
+    _atomTable->updateImportanceIndexBoundaries(local->getSTI(), av->getSTI());
+
     // Notify any interested parties that the AV changed.
     AVCHSigl& avch = _atomTable->AVChangedSignal();
     avch(getHandle(), local, av);

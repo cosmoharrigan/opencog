@@ -721,14 +721,32 @@ public:
      */
 
     void testGetNormalisedSTI() {
-        Handle h = atomSpace->addNode(CONCEPT_NODE, "blah");
+        Handle n1 = atomSpace->addNode(CONCEPT_NODE, "n1");
+        Handle n2 = atomSpace->addNode(CONCEPT_NODE, "n2");
+        Handle n3 = atomSpace->addNode(CONCEPT_NODE, "n3");
+
         bool clip = false, average = false;
-        TS_ASSERT_EQUALS(atomSpace->bank.getNormalisedZeroToOneSTI(h->getAttentionValue(), average, clip), 0.0f);
+        TS_ASSERT_EQUALS(atomSpace->bank.getNormalisedZeroToOneSTI(n1->getAttentionValue(), average, clip), 0.0f);
+        TS_ASSERT_EQUALS(atomSpace->bank.getNormalisedZeroToOneSTI(n2->getAttentionValue(), average, clip), 0.0f);
+        TS_ASSERT_EQUALS(atomSpace->bank.getNormalisedZeroToOneSTI(n3->getAttentionValue(), average, clip), 0.0f);
+
+        setSTI(n1, 10);
+        setSTI(n2, 40);
+        atomSpace->bank.updateSTIBoundaries();
+
+        TS_ASSERT_DELTA(atomSpace->bank.getNormalisedZeroToOneSTI(n1->getAttentionValue(), average, clip), 0.25f, 0.001f);
+        TS_ASSERT_DELTA(atomSpace->bank.getNormalisedZeroToOneSTI(n2->getAttentionValue(), average, clip), 1.0f, 0.001f);
+        TS_ASSERT_EQUALS(atomSpace->bank.getNormalisedZeroToOneSTI(n3->getAttentionValue(), average, clip), 0.0f);
+
         average = true;
-        setSTI(h, 10);
-        TS_ASSERT(atomSpace->bank.getNormalisedZeroToOneSTI(h->getAttentionValue(), average, clip) > 1.0f);
+        TS_ASSERT_DELTA(atomSpace->bank.getNormalisedZeroToOneSTI(n1->getAttentionValue(), average, clip), 0.5f, 0.001f);
+        TS_ASSERT_DELTA(atomSpace->bank.getNormalisedZeroToOneSTI(n2->getAttentionValue(), average, clip), 2.0f, 0.001f);
+        TS_ASSERT_EQUALS(atomSpace->bank.getNormalisedZeroToOneSTI(n3->getAttentionValue(), average, clip), 0.0f);
+
         clip = true;
-        TS_ASSERT_DELTA(atomSpace->bank.getNormalisedZeroToOneSTI(h->getAttentionValue(), average, clip), 1.0f, 0.001f);
+        TS_ASSERT_DELTA(atomSpace->bank.getNormalisedZeroToOneSTI(n1->getAttentionValue(), average, clip), 0.5f, 0.001f);
+        TS_ASSERT_DELTA(atomSpace->bank.getNormalisedZeroToOneSTI(n2->getAttentionValue(), average, clip), 1.0f, 0.001f);
+        TS_ASSERT_EQUALS(atomSpace->bank.getNormalisedZeroToOneSTI(n3->getAttentionValue(), average, clip), 0.0f);
     }
 
 };

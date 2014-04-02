@@ -477,7 +477,32 @@ public:
     void updateImportanceIndex(AtomPtr a, int bin)
     {
         std::lock_guard<std::recursive_mutex> lck(_mtx);
-        importanceIndex.updateImportance(a, bin);
+        importanceIndex.updateImportanceBin(a, bin);
+    }
+
+    /** Updates the importance boundaries for the ImportanceIndex, which
+     * contains the minimum and maximum STI values that exist in the index
+     *
+     * @param The old STI value of the atom
+     * @param The new STI value of the atom
+     */
+    void updateImportanceIndexBoundaries(AttentionValue::sti_t avOld,
+                                         AttentionValue::sti_t avNew)
+    {
+        std::lock_guard<std::recursive_mutex> lck(_mtx);
+        importanceIndex.updateImportanceBoundaries(avOld, avNew);
+    }
+
+    AttentionValue::sti_t getMinSTI()
+    {
+        std::lock_guard<std::recursive_mutex> lck(_mtx);
+        return importanceIndex.getMinSTI();
+    }
+
+    AttentionValue::sti_t getMaxSTI()
+    {
+        std::lock_guard<std::recursive_mutex> lck(_mtx);
+        return importanceIndex.getMaxSTI();
     }
 
     /**

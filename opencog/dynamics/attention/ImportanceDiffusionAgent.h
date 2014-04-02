@@ -224,6 +224,10 @@ public:
     virtual ~ImportanceDiffusionAgent();
     virtual void run();
 
+    /** Initialise attention bank statistics with up-to-date starting values.
+     */
+    void init();
+
     /** Return the agent's logger object
      *
      * @return A logger object.

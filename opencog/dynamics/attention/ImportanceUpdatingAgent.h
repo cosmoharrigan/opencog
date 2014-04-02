@@ -319,7 +319,7 @@ private:
 
     /** Initialise iterative variables with suitable starting values.
      */
-    void init();
+    void init(AtomSpace* a);
 
     //! Has init been run to give iterative variables sensible start points
     bool initialEstimateMade;
