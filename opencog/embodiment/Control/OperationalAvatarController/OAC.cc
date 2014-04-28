@@ -71,7 +71,7 @@ bool OAC::customLoopRun(void)
     this->plaza->forwardMessages();
 #endif
 //    return MessageCogServer::customLoopRun();
-// TODO
+// TODO MESSAGING
 }
 
 void OAC::init(const std::string & myId, const std::string & ip, int portNumber,

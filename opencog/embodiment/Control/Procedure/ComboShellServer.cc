@@ -75,7 +75,7 @@ bool ComboShellServer::customLoopRun()
 {
     if (_waiting) {
 //        return MessageCogServer::customLoopRun();
-// TODO
+// TODO MESSAGING
     }
 
     combo_tree tr;
