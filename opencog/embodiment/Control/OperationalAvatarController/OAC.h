@@ -78,7 +78,7 @@ class PsiActionSelectionAgentUTest;
 
 namespace opencog { namespace oac {
 
-class OAC : public opencog::messaging::MessageCogServer
+class OAC
 {
     friend class::PsiModulatorUpdaterAgentUTest; 
     friend class::PsiDemandUpdaterAgentUTest;

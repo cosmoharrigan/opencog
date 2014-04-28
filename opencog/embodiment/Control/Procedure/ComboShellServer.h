@@ -28,7 +28,7 @@
 
 namespace opencog {
 
-class ComboShellServer : public MessageCogServer
+class ComboShellServer
 {
 
 public:

@@ -70,7 +70,8 @@ bool OAC::customLoopRun(void)
 #ifdef HAVE_ZMQ
     this->plaza->forwardMessages();
 #endif
-    return MessageCogServer::customLoopRun();
+//    return MessageCogServer::customLoopRun();
+// TODO
 }
 
 void OAC::init(const std::string & myId, const std::string & ip, int portNumber,

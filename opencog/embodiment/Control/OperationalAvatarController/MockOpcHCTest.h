@@ -37,7 +37,7 @@ using namespace opencog;
 
 namespace opencog { namespace oac {
 
-class MockOpcHCTest : public opencog::messaging::MessageCogServer
+class MockOpcHCTest
 {
 
 private:
