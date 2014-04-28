@@ -2,7 +2,7 @@ ADD_LIBRARY (oac SHARED
 	Pet
 	Plaza
 	OAC
-	PetMessageSender
+#	PetMessageSender
 	PVPActionPlanSender
 	ProcedureInterpreterAgent
 	ImportanceDecayAgent
@@ -99,6 +99,7 @@ TARGET_LINK_LIBRARIES (opcHcTester
 	ImaginaryLife
 )
 IF (HAVE_PROTOBUF)
-	TARGET_LINK_LIBRARIES (opcHcTester LearningServerMessages ${PROTOBUF_LIBRARY})
+	TARGET_LINK_LIBRARIES (opcHcTester 
+#            LearningServerMessages 
+            ${PROTOBUF_LIBRARY})
 ENDIF (HAVE_PROTOBUF)
-

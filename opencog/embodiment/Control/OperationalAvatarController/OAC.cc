@@ -35,7 +35,7 @@
 // For loading Scheme scripts by C++ code
 #include <opencog/guile/load-file.h>
 
-#include <opencog/embodiment/Learning/LearningServerMessages/SchemaMessage.h>
+//#include <opencog/embodiment/Learning/LearningServerMessages/SchemaMessage.h>
 #include <opencog/embodiment/AvatarComboVocabulary/AvatarComboVocabulary.h>
 #include <opencog/spacetime/SpaceTime.h>
 

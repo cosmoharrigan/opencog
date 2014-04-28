@@ -13,7 +13,7 @@ ADD_LIBRARY (Procedure SHARED
 )
 
 TARGET_LINK_LIBRARIES (Procedure
-	LearningServerMessages
+#	LearningServerMessages
 	WorldWrapper
 )
 
@@ -46,7 +46,7 @@ TARGET_LINK_LIBRARIES (combo_shell
 
 IF (HAVE_PROTOBUF)
 	TARGET_LINK_LIBRARIES(combo_shell
-		LearningServerMessages
+#		LearningServerMessages
 		${PROTOBUF_LIBRARY}
 	)
 ENDIF (HAVE_PROTOBUF)

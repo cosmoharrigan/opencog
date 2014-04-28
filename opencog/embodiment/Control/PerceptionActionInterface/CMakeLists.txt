@@ -31,7 +31,7 @@ ADD_LIBRARY (PAI SHARED
 )
 
 TARGET_LINK_LIBRARIES(PAI 
-	LearningServerMessages
+#	LearningServerMessages
 	Language
 	Control
 	AtomSpaceExtensions
