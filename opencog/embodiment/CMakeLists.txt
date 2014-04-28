@@ -1,5 +1,5 @@
 ADD_SUBDIRECTORY (AtomSpaceExtensions)
-ADD_SUBDIRECTORY (AutomatedSystemTest)
+#ADD_SUBDIRECTORY (AutomatedSystemTest)
 ADD_SUBDIRECTORY (Control)
 ADD_SUBDIRECTORY (Learning)
 ADD_SUBDIRECTORY (WorldWrapper)
