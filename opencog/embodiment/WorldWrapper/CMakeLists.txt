@@ -14,6 +14,5 @@ TARGET_LINK_LIBRARIES(WorldWrapper
 	TangentBug
 	AStar
 	HPASearch
-	MessagingSystem
 	AvatarComboVocabulary
 )

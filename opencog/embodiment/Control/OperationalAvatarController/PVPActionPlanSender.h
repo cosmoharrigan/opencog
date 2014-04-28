@@ -28,7 +28,6 @@
  * Concrete subclass of ActionPlanSender that sends action plans to the PVP
  */
 
-#include <opencog/embodiment/Control/MessagingSystem/NetworkElement.h>
 #include <opencog/embodiment/Control/PerceptionActionInterface/ActionPlanSender.h>
 #include <opencog/embodiment/Control/PerceptionActionInterface/ActionPlan.h>
 

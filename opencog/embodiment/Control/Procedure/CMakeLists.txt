@@ -40,7 +40,6 @@ ENDIF (HAVE_PROTOBUF)
 ADD_EXECUTABLE (combo_shell ComboPAIExecutable)
 TARGET_LINK_LIBRARIES (combo_shell
 	Procedure
-	MessagingSystem
 	WorldWrapper
 	lslib
 )

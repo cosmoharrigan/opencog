@@ -21,8 +21,6 @@
  */
 
 #include "OACMock.h"
-//#include <opencog/embodiment/Control/MessagingSystem/MessageFactory.h>
-
 
 void OACMock::setConfig()
 {
@@ -148,4 +146,3 @@ Message * OACMock::createMessageFromFile(const std::string & from,
 
     return p_message; 
 }
-

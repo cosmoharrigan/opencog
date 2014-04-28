@@ -26,7 +26,6 @@
 #include <opencog/embodiment/Control/Procedure/ComboInterpreter.h>
 #include <opencog/util/exceptions.h>
 #include <opencog/embodiment/Control/EmbodimentConfig.h>
-#include <opencog/embodiment/Control/MessagingSystem/NetworkElement.h>
 #include <opencog/embodiment/AvatarComboVocabulary/AvatarComboVocabulary.h>
 
 //true if the timing is taken into account in the similarity measure

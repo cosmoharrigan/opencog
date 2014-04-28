@@ -8,7 +8,6 @@ ADD_LIBRARY(PBTester
 
 TARGET_LINK_LIBRARIES (PBTester 
 	PAI
-	MessagingSystem
 	Control
 	util
 )
@@ -19,7 +18,6 @@ TARGET_LINK_LIBRARIES (pbTest
 	PBTester
 #	LearningSpace
 #	LearningServerMessages
-	MessagingSystem
 	lslib
 )
 

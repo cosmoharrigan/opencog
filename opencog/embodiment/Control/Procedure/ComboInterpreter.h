@@ -33,7 +33,6 @@
 #include <vector>
 #include <boost/noncopyable.hpp>
 #include <opencog/server/CogServer.h>
-#include <opencog/embodiment/Control/MessagingSystem/NetworkElement.h>
 
 namespace opencog { namespace Procedure {
 

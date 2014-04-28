@@ -37,8 +37,6 @@
 #include <opencog/spacetime/atom_types.h>
 #include <opencog/spacetime/TimeServer.h>
 
-#include <opencog/embodiment/Control/MessagingSystem/NetworkElement.h>
-
 #include <opencog/embodiment/Learning/behavior/BE.h>
 #include <opencog/embodiment/Learning/behavior/BDTracker.h>
 #include <opencog/embodiment/Learning/behavior/PAIWorldProvider.h>

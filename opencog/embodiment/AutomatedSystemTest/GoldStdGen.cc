@@ -26,7 +26,6 @@
 
 #include <opencog/util/Logger.h>
 
-//#include <opencog/embodiment/Control/MessagingSystem/MessageFactory.h>
 #include "GoldStdGen.h"
 
 using namespace opencog::messaging;

@@ -25,7 +25,6 @@
 #define PETMESSAGESENDER_H_
 
 #include "MessageSender.h"
-#include <opencog/embodiment/Control/MessagingSystem/NetworkElement.h>
 
 namespace opencog { namespace oac {
 

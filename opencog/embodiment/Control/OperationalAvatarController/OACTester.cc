@@ -23,7 +23,6 @@
 
 #include "OAC.h"
 #include <opencog/embodiment/Control/EmbodimentConfig.h>
-#include <opencog/embodiment/Control/MessagingSystem/StringMessage.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>

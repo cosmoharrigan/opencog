@@ -20,7 +20,6 @@ ENDIF (HAVE_ZMQ)
 SET(EXE_LINK_LIBS
 	lslib
 	PetaverseHC
-	MessagingSystem
 	LearningServerMessages
 	Control
 	cogutil

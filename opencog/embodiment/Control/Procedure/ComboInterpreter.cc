@@ -27,8 +27,6 @@
 #include <opencog/util/lazy_normal_selector.h>
 
 #include "ComboInterpreter.h"
-#include <opencog/embodiment/Control/MessagingSystem/NetworkElement.h>
-#include <opencog/embodiment/Control/MessagingSystem/StringMessage.h>
 #include <boost/lexical_cast.hpp>
 
 namespace opencog { namespace Procedure {

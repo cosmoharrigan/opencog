@@ -27,7 +27,6 @@
  */
 
 #include "PVPActionPlanSender.h"
-#include <opencog/embodiment/Control/MessagingSystem/StringMessage.h>
 #include <opencog/util/Config.h>
 
 namespace opencog { namespace oac {

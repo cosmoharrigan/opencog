@@ -27,7 +27,6 @@
 #include <sstream>
 #include <map>
 #include <opencog/util/functional.h>
-#include <opencog/embodiment/Control/MessagingSystem/NetworkElement.h>
 #include <opencog/embodiment/AvatarComboVocabulary/avatar_builtin_action.h>
 #include <opencog/embodiment/WorldWrapper/WorldWrapperUtil.h>
 

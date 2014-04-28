@@ -28,8 +28,6 @@
 #include <opencog/util/StringManipulator.h>
 #include <opencog/util/foreach.h>
 
-//#include <opencog/embodiment/Control/MessagingSystem/MessageFactory.h>
-
 #include "RewardMessage.h"
 
 using namespace opencog::learningserver::messages;

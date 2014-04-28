@@ -13,7 +13,6 @@ TARGET_LINK_LIBRARIES(AvatarUTest
 	Procedure
 	behavior
 	PAI
-	MessagingSystem
 	Control
 	comboreduct
 	cogutil
@@ -42,8 +41,6 @@ IF (TCL_TCLSH)
 		# The following dependencies must be built first, because the
 		# scripts/embodiment/make_distribution script tries to copy them.
 		# (see lines 36:42 of that script, starting with $binDirH/opencog/...
-		DEPENDS ${CMAKE_BINARY_DIR}/opencog/embodiment/Control/MessagingSystem/router
-		DEPENDS ${CMAKE_BINARY_DIR}/opencog/embodiment/Control/MessagingSystem/spawner
 		DEPENDS ${CMAKE_BINARY_DIR}/opencog/embodiment/Control/OperationalAvatarController/oac-exec
 		DEPENDS ${CMAKE_BINARY_DIR}/opencog/embodiment/Control/OperationalAvatarController/opcHcTester
 		DEPENDS ${CMAKE_BINARY_DIR}/opencog/embodiment/Control/Procedure/combo_shell
@@ -62,7 +59,6 @@ IF (TCL_TCLSH)
 		Procedure
 		behavior
 		PAI
-		MessagingSystem
 		Control
 		comboreduct
 		cogutil

@@ -37,7 +37,6 @@
 #include <opencog/spacetime/SpaceServer.h>
 
 #include <opencog/embodiment/AtomSpaceExtensions/AtomSpaceUtil.h>
-#include <opencog/embodiment/Control/MessagingSystem/NetworkElement.h>
 
 #include "BaseAgentModeHandler.h"
 #include "Pet.h"

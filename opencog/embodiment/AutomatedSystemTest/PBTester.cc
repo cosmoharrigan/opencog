@@ -32,10 +32,8 @@
  */
 
 #include "PBTester.h"
-#include <opencog/embodiment/Control/MessagingSystem/NetworkElement.h>
 
 using namespace AutomatedSystemTest;
-using namespace opencog::messaging;
 using namespace opencog;
 
 static const bool EXIT_ON_FAILURE = false;

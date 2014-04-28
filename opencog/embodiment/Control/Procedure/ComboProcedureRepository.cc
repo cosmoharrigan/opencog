@@ -30,7 +30,6 @@
 #include <opencog/util/macros.h>
 
 #include <opencog/embodiment/AvatarComboVocabulary/AvatarComboVocabulary.h>
-#include <opencog/embodiment/Control/MessagingSystem/NetworkElement.h>
 
 using namespace AvatarCombo;
 using namespace std;

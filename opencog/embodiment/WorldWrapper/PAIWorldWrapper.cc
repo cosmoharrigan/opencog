@@ -43,7 +43,6 @@
 
 #include <opencog/embodiment/Control/PerceptionActionInterface/PVPXmlConstants.h>
 #include <opencog/embodiment/AtomSpaceExtensions/PredefinedProcedureNames.h>
-#include <opencog/embodiment/Control/MessagingSystem/NetworkElement.h>
 #include <opencog/embodiment/AvatarComboVocabulary/AvatarComboVocabulary.h>
 
 #include "PAIWorldWrapper.h"

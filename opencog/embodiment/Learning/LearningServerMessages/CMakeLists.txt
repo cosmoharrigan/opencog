@@ -10,7 +10,6 @@ ADD_LIBRARY (LearningServerMessages SHARED
 
 
 TARGET_LINK_LIBRARIES (LearningServerMessages
-	MessagingSystem
 	AvatarComboVocabulary
 	Control
 	AtomSpaceExtensions

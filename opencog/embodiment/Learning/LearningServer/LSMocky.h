@@ -26,7 +26,6 @@
 
 #include <opencog/util/Logger.h>
 #include <opencog/atomspace/AtomSpace.h>
-#include <opencog/embodiment/Control/MessagingSystem/MessageCogServer.h>
 #include <opencog/embodiment/Control/EmbodimentConfig.h>
 #include "SleepAgent.h"
 

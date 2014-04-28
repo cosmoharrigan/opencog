@@ -27,7 +27,6 @@
 #include "DistortedComboSize.h"
 #include <opencog/util/Logger.h>
 #include <opencog/embodiment/Control/EmbodimentConfig.h>
-#include <opencog/embodiment/Control/MessagingSystem/NetworkElement.h>
 
 namespace FitnessEstimator
 {

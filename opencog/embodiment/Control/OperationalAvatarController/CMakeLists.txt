@@ -46,7 +46,6 @@ TARGET_LINK_LIBRARIES (oac
 	PAI
 	Language
 	behavior
-	MessagingSystem
 	Procedure
 	savable
 	attention

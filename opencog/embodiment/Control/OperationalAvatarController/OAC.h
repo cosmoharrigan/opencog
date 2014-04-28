@@ -43,10 +43,6 @@
 #include <opencog/dynamics/attention/ImportanceUpdatingAgent.h>
 #include <opencog/dynamics/attention/STIDecayingAgent.h>
 
-
-#include <opencog/embodiment/Control/MessagingSystem/MessageCogServer.h>
-#include <opencog/embodiment/Control/MessagingSystem/StringMessage.h>
-#include <opencog/embodiment/Control/MessagingSystem/RawMessage.h>
 #include <opencog/embodiment/Control/PredicateUpdaters/PredicatesUpdater.h>
 #include <opencog/embodiment/Control/PerceptionActionInterface/PAI.h>
 #include <opencog/embodiment/Control/PerceptionActionInterface/EventResponder.h>

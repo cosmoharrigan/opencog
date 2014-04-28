@@ -29,7 +29,6 @@
 
 #include <opencog/embodiment/Learning/Filter/ActionFilter.h>
 #include <opencog/embodiment/Control/LoggerFactory.h>
-#include <opencog/embodiment/Control/MessagingSystem/NetworkElement.h>
 #include <opencog/embodiment/Learning/Filter/EntityRelevanceFilter.h>
 #include <opencog/embodiment/Learning/PetaverseMOSES/moses-learning.h>
 

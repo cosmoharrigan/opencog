@@ -27,7 +27,6 @@
 #include "ProcedureInterpreter.h"
 #include "ComboProcedure.h"
 #include "RunningProcedureId.h"
-#include <opencog/embodiment/Control/MessagingSystem/NetworkElement.h>
 
 namespace opencog { namespace Procedure {
 

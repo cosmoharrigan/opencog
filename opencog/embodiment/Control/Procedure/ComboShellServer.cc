@@ -29,7 +29,6 @@
 #include "ComboShellServer.h"
 #include "ComboInterpreter.h"
 #include "ComboProcedureRepository.h"
-#include <opencog/embodiment/Control/MessagingSystem/StringMessage.h>
 #include <opencog/embodiment/AvatarComboVocabulary/AvatarComboVocabulary.h>
 
 using namespace Procedure;

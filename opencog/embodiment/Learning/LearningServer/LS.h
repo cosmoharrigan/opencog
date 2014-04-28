@@ -31,8 +31,6 @@
 #include <opencog/embodiment/Learning/behavior/WorldProvider.h>
 #include <opencog/embodiment/Control/EmbodimentConfig.h>
 
-#include <opencog/embodiment/Control/MessagingSystem/MessageCogServer.h>
-
 #include <opencog/embodiment/Learning/LearningServerMessages/LSCmdMessage.h>
 #include <opencog/embodiment/Learning/LearningServerMessages/LearnMessage.h>
 #include <opencog/embodiment/Learning/LearningServerMessages/RewardMessage.h>

@@ -13,7 +13,6 @@ ADD_LIBRARY(behavior SHARED
 
 TARGET_LINK_LIBRARIES (behavior
 	PAI
-	MessagingSystem
 	AtomSpaceExtensions
 	atomspace
 	cogutil

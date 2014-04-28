@@ -36,7 +36,6 @@
 
 #include <opencog/embodiment/Control/EmbodimentConfig.h>
 #include <opencog/embodiment/AvatarComboVocabulary/AvatarComboVocabulary.h>
-#include <opencog/embodiment/Control/MessagingSystem/NetworkElement.h>
 
 #include "WorldWrapperUtilCache.h"
 

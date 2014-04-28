@@ -29,8 +29,6 @@
 #include <opencog/atomspace/AtomSpace.h>
 #include <opencog/spacetime/SpaceServer.h>
 
-#include <opencog/embodiment/Control/MessagingSystem/MessageCogServer.h>
-
 #include "Pet.h"
 #include "PetMessageSender.h"
 #include "HCTestAgent.h"

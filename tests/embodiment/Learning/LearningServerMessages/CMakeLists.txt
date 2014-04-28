@@ -1,4 +1,3 @@
-
 ADD_DEFINITIONS(-DATOM_SPACE_DUMP_FILE=\\"${CMAKE_CURRENT_SOURCE_DIR}/atomSpace.xml\\")
 
 # At this time, the LearnMessageUTest test does not compile,
@@ -6,7 +5,6 @@ ADD_DEFINITIONS(-DATOM_SPACE_DUMP_FILE=\\"${CMAKE_CURRENT_SOURCE_DIR}/atomSpace.
 IF(0)
 ADD_CXXTEST(LearnMessageUTest)
 TARGET_LINK_LIBRARIES(LearnMessageUTest 
-	MessagingSystem
 	LearningServerMessages
 	cogutil
 	Filter
@@ -20,7 +18,6 @@ ENDIF(0)
 
 ADD_CXXTEST(RewardMessageUTest)
 TARGET_LINK_LIBRARIES(RewardMessageUTest 
-	MessagingSystem
 	LearningServerMessages
 	Control
 	SpaceMap
@@ -34,7 +31,6 @@ ENDIF(WIN32)
 
 ADD_CXXTEST(SchemaMessageUTest)
 TARGET_LINK_LIBRARIES(SchemaMessageUTest 
-	MessagingSystem
 	LearningServerMessages
 	SpaceMap
 	AvatarComboVocabulary

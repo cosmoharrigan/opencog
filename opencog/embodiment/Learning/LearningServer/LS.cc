@@ -25,7 +25,6 @@
 
 #include <opencog/util/Config.h>
 
-//#include <opencog/embodiment/Control/MessagingSystem/MessageFactory.h>
 #include <opencog/embodiment/Learning/LearningServerMessages/SchemaMessage.h>
 #include <opencog/embodiment/Learning/LearningServer/AtomSpaceWorldProvider.h>
 #include <opencog/embodiment/Control/PerceptionActionInterface/PAIUtils.h>

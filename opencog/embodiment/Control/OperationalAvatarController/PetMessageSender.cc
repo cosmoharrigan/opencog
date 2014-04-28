@@ -22,7 +22,6 @@
  */
 
 #include <opencog/embodiment/Control/PerceptionActionInterface/PAIUtils.h>
-#include <opencog/embodiment/Control/MessagingSystem/FeedbackMessage.h>
 
 #include <opencog/embodiment/Learning/LearningServerMessages/LearnMessage.h>
 #include <opencog/embodiment/Learning/LearningServerMessages/LSCmdMessage.h>
