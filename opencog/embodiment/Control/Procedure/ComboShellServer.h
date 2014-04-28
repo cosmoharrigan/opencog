@@ -25,6 +25,7 @@
 #define COMBO_SHELL_SERVER_H
 
 #include <string>
+#include <opencog/server/BaseServer.h>
 
 namespace opencog {
 
@@ -34,14 +35,14 @@ class ComboShellServer
 public:
     static BaseServer* createInstance();
     ComboShellServer();
-    void init(const string& OAC_ID);
+    void init(const std::string& OAC_ID);
 
     // overrides
     bool customLoopRun();
     bool processNextMessage(Message *message);
 private:
     bool _waiting;
-    string _OAC_ID;
+    std::string _OAC_ID;
 }; // class
 
 #endif
