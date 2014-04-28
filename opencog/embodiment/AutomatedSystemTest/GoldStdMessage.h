@@ -24,8 +24,6 @@
 #ifndef _GOLD_STD_MESSAGE_H_
 #define _GOLD_STD_MESSAGE_H_
 
-using namespace opencog::messaging;
-
 namespace AutomatedSystemTest
 {
 

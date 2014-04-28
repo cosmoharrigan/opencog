@@ -26,7 +26,7 @@
 
 #include <string>
 
-namespace opencog { namespace messaging {
+namespace opencog {
 
 class ComboShellServer : public MessageCogServer
 {
@@ -43,6 +43,5 @@ private:
     bool _waiting;
     string _OAC_ID;
 }; // class
-} } // namespace opencog::messaging
 
 #endif

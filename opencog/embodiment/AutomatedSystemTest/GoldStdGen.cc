@@ -28,7 +28,6 @@
 
 #include "GoldStdGen.h"
 
-using namespace opencog::messaging;
 using namespace AutomatedSystemTest;
 
 GoldStdGen::GoldStdGen(const char* goldStdFilename)
