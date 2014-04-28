@@ -17,8 +17,8 @@ ADD_EXECUTABLE (pbTest PBTesterExecutable)
 
 TARGET_LINK_LIBRARIES (pbTest 
 	PBTester
-	LearningSpace
-	LearningServerMessages
+#	LearningSpace
+#	LearningServerMessages
 	MessagingSystem
 	lslib
 )
