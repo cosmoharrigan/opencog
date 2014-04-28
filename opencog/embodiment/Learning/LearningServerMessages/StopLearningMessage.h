@@ -25,7 +25,7 @@
 #ifndef STOPLEARNINGMESSAGE_H_
 #define STOPLEARNINGMESSAGE_H_
 
-#include <opencog/embodiment/Control/MessagingSystem/Message.h>
+//#include <opencog/embodiment/Control/MessagingSystem/Message.h>
 #include <opencog/atomspace/AtomSpace.h>
 
 namespace opencog { namespace learningserver { namespace messages {

@@ -25,7 +25,7 @@
 #include <sstream>
 #include <opencog/util/StringTokenizer.h>
 
-#include <opencog/embodiment/Control/MessagingSystem/MessageFactory.h>
+////#include <opencog/embodiment/Control/MessagingSystem/MessageFactory.h>
 #include <opencog/embodiment/AvatarComboVocabulary/AvatarComboVocabulary.h>
 
 #include "SchemaMessage.h"

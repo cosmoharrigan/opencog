@@ -26,7 +26,7 @@
 
 #include <opencog/atomspace/AtomSpace.h>
 #include <opencog/embodiment/AtomSpaceExtensions/AtomSpaceUtil.h>
-#include <opencog/embodiment/Control/MessagingSystem/Message.h>
+//#include <opencog/embodiment/Control/MessagingSystem/Message.h>
 
 using namespace opencog;
 

@@ -34,7 +34,7 @@
 #include <opencog/spacetime/SpaceServer.h>
 #include <opencog/spacetime/SpaceTime.h>
 #include <opencog/spacetime/TimeServer.h>
-#include <opencog/embodiment/Control/MessagingSystem/MessageFactory.h>
+//#include <opencog/embodiment/Control/MessagingSystem/MessageFactory.h>
 
 #include "LearnMessage.h"
 

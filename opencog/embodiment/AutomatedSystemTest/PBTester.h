@@ -30,7 +30,7 @@
 #include <set>
 
 #include <opencog/embodiment/Control/MessagingSystem/MessageCogServer.h>
-#include <opencog/embodiment/Control/MessagingSystem/Message.h>
+//#include <opencog/embodiment/Control/MessagingSystem/Message.h>
 #include "TestConfig.h"
 #include "GoldStdGen.h"
 

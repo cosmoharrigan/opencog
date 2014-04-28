@@ -24,7 +24,7 @@
 #ifndef _GOLD_STD_MESSAGE_H_
 #define _GOLD_STD_MESSAGE_H_
 
-#include <opencog/embodiment/Control/MessagingSystem/Message.h> 
+//#include <opencog/embodiment/Control/MessagingSystem/Message.h> 
 
 using namespace opencog::messaging;
 

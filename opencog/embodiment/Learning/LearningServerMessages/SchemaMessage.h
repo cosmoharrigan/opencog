@@ -24,7 +24,7 @@
 #ifndef SCHEMAMESSAGE_H_
 #define SCHEMAMESSAGE_H_
 
-#include <opencog/embodiment/Control/MessagingSystem/Message.h>
+//#include <opencog/embodiment/Control/MessagingSystem/Message.h>
 #include <opencog/comboreduct/combo/vertex.h>
 
 namespace opencog { namespace learningserver { namespace messages {

@@ -21,7 +21,7 @@
  */
 
 #include "OACMock.h"
-#include <opencog/embodiment/Control/MessagingSystem/MessageFactory.h>
+//#include <opencog/embodiment/Control/MessagingSystem/MessageFactory.h>
 
 
 void OACMock::setConfig()

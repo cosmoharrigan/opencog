@@ -23,7 +23,7 @@
  */
 
 
-#include <opencog/embodiment/Control/MessagingSystem/MessageFactory.h>
+//#include <opencog/embodiment/Control/MessagingSystem/MessageFactory.h>
 #include <opencog/embodiment/Learning/LearningServerMessages/LSCmdMessage.h>
 #include <opencog/embodiment/Learning/LearningServerMessages/LearnMessage.h>
 #include <opencog/embodiment/Learning/LearningServerMessages/RewardMessage.h>

@@ -25,7 +25,7 @@
 #define COMBO_SHELL_SERVER_H
 
 #include <string>
-#include <opencog/embodiment/Control/MessagingSystem/Message.h>
+//#include <opencog/embodiment/Control/MessagingSystem/Message.h>
 #include <opencog/embodiment/Control/MessagingSystem/MessageCogServer.h>
 
 namespace opencog { namespace messaging {

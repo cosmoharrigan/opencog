@@ -23,7 +23,7 @@
  */
 
 #include <opencog/util/StringTokenizer.h>
-#include <opencog/embodiment/Control/MessagingSystem/MessageFactory.h>
+////#include <opencog/embodiment/Control/MessagingSystem/MessageFactory.h>
 
 #include "LSCmdMessage.h"
 
