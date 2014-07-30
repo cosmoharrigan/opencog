@@ -91,9 +91,7 @@ REPOSITORIES="
 		ppa:opencog-dev/ppa \
 		"
 		#opencog-dev: cxxtest
-		#gandelman: python-flask-restful
 #               ppa:chris-lea/zeromq \
-#		ppa:chris-lea/python-flask \
 #               ppa:chris-lea/python-itsdangerous \
 #               ppa:chris-lea/python-simplejson \
 #               ppa:gandelman-a/test-catalog \
@@ -130,17 +128,7 @@ PACKAGES_BUILD="
 		cython \
 		python-dev \
 		python-zmq \
-		python-matplotlib \
-		python-nose \
-		python-numpy \
-		python-scipy \
-		python-mock \
 		python-simplejson \
-                python-pyparsing \
-                python-dateutil \
-                python-six \
-                python-tornado \
-                python-wsgiref \
 		libboost-date-time1.54-dev \
 		libboost-filesystem1.54-dev \
 		libboost-program-options1.54-dev \
@@ -167,8 +155,6 @@ PACKAGES_BUILD="
 		"
 		#liblua5.1-0-dev \
 		#libxmlrpc-c3-dev \
-		#python-flask \
-		#python-flask-restful \
 
 PACKAGES_RUNTIME="	
 		unixodbc \
